@@ -253,11 +253,10 @@
                 var coresReplicadas = [];
                 for (var i in cores) {
                     var cor = cores[i];                    
-                    for (var j=0; j < 4; j++) {
+                    for (var j = 0; j < 4; j++) {
                         coresReplicadas = coresReplicadas.concat(cor);
                     }
                 }
-
                 gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(coresReplicadas), gl.STATIC_DRAW);
                 cuboVertexColorBuffer.itemSize = 4;
                 cuboVertexColorBuffer.numItems = 24;
