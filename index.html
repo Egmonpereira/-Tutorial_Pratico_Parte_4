@@ -198,7 +198,7 @@
                 /*---Desenhando o Cubo--*/
 
                 cuboVertexPositionBuffer = gl.createBuffer();
-                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cuboVertexPositionBuffer);
+                gl.bindBuffer(gl.ARRAY_BUFFER, cuboVertexPositionBuffer);
                 vertices = [
                     // Frente
                     -1.0, -1.0,  1.0,
@@ -236,12 +236,12 @@
                     -1.0,  1.0,  1.0,
                     -1.0,  1.0, -1.0,
                 ];
-                gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+                gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
                 cuboVertexPositionBuffer.itemSize = 3;
                 cuboVertexPositionBuffer.numItems = 24;
 
                 cuboVertexColorBuffer = gl.createBuffer();
-                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cuboVertexColorBuffer);
+                gl.bindBuffer(gl.ARRAY_BUFFER, cuboVertexColorBuffer);
                 cores = [
                     [1.0, 0.0, 0.0, 1.0],     // Frente
                     [1.0, 1.0, 0.0, 1.0],     // Trás
@@ -257,7 +257,7 @@
                         coresReplicadas = coresReplicadas.concat(cor);
                     }
                 }
-                gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Float32Array(coresReplicadas), gl.STATIC_DRAW);
+                gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(coresReplicadas), gl.STATIC_DRAW);
                 cuboVertexColorBuffer.itemSize = 4;
                 cuboVertexColorBuffer.numItems = 24;
 
@@ -313,13 +313,13 @@
                 mPushMatrix();
                 mat4.rotate(mMatrix, mMatrix, degToRad(rCubo), [1, 1, 1]);
 
-                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cuboVertexPositionBuffer);
+                gl.bindBuffer(gl.ARRAY_BUFFER, cuboVertexPositionBuffer);
                 gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, cuboVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
-                
-                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cuboVertexColorBuffer);
+                gl.bindBuffer(gl.ARRAY_BUFFER, cuboVertexColorBuffer);
                 gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, cuboVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
-                /*setMatrixUniforms();*/
-                gl.drawElements(gl.TRIANGLE, 0, cuboVertexPositionBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+                gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cuboVertexIndexBuffer);
+                setMatrixUniforms();
+                gl.drawElements(gl.TRIANGLES, cuboVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 
                 mPopMatrix();
             }
